@@ -20,11 +20,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '74raofmi10-qf*$*tf!3@u%a(t9&zp(yi97)d30cn5*(z8*!xc'
+SECRET_KEY = 'i3=vx455l!n7(4#yx-22cvenaq06$tx=6b7vto+c$ogkh9lcn@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 
 ALLOWED_HOSTS = ["*"]
 
@@ -38,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'employees'
 ]
 
 MIDDLEWARE = [
@@ -55,7 +55,8 @@ ROOT_URLCONF = 'testplatform.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')]
+        ,
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -76,15 +77,14 @@ WSGI_APPLICATION = 'testplatform.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', # 指定MySQL引擎
-        'NAME': 'mydata', # 数据库名称
-        'USER':'root', # 用户名
-        'PASSWORD':'root', # 密码
-        'HOST':'localhost', # 数据库服务器IP
-        'PORT':'3306', # 端口
+        'ENGINE': 'django.db.backends.mysql',   # 指定MySQL引擎
+        'NAME': 'mydata',   # 数据库名称
+        'USER': 'root',  # 用户名
+        'PASSWORD': 'root',  # 密码
+        'HOST': 'localhost',     # 数据库服务器IP
+        'PORT': '3306',  # 端口
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -108,7 +108,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hans'
 
 TIME_ZONE = 'UTC'
 
