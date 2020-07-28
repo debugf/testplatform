@@ -16,8 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+from users import views as usersviews
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # include()：执行子路由，如果满足某个主路由的条件就进入对应的子路由，这里不填主路由，所以匹配不到就直接进入子路由寻找
-    path('', include("employees.urls")),
+    # path('', include("employees.urls")),
+    path("api/user", usersviews.user)
 ]
