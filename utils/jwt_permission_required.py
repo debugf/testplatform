@@ -11,7 +11,7 @@ def auth_permission_required():
             try:
                 auth = request.META.get('HTTP_AUTHORIZATION').split()
             except AttributeError:
-                return JsonResponse({"code": 401, "message": "没有权限"})
+                return JsonResponse({"status_code": 401, "message": "没有权限"})
             if auth[0].lower() == 'token':
                 try:
                     dict = jwt.decode(auth[1], settings.SECRET_KEY, algorithms=['HS256'])
