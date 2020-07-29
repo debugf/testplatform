@@ -13,13 +13,11 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+# testplatform/urls.py
 from django.contrib import admin
 from django.urls import path, include
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # include()：执行子路由，如果满足某个主路由的条件就进入对应的子路由，这里不填主路由，所以匹配不到就直接进入子路由寻找
     path('api/user/', include("users.urls")),
-
 ]

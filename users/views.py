@@ -1,3 +1,4 @@
+# users/views.py
 from django.http import JsonResponse
 from django.views import View
 
@@ -15,8 +16,8 @@ class LoginView(View):
         username = python_data.get('username')
         password = python_data.get('password')
         data = Users.objects.filter(username=username, password=password).first()
-        token = generate_jwt_token(username)
         if data:
+            token = generate_jwt_token(username)
             result["message"] = "登录成功"
             result["success"] = True
             result["details"] = {"id": data.id,"token": token}
@@ -25,12 +26,6 @@ class LoginView(View):
         result["success"] = False
         return JsonResponse(result, status=400)
 
-@auth_permission_required()
-def demo(request):
-    if request.method == 'GET':
-        return JsonResponse({"state": 1, "message": "token有效"})
-    else:
-        return JsonResponse({"state": 0, "message": "token无效"})
 
 class RegisterView(View):
     def post(self, request):
@@ -52,3 +47,9 @@ class RegisterView(View):
             return JsonResponse(result, status=400)
 
 
+@auth_permission_required()
+def demo(request):
+    if request.method == 'GET':
+        return JsonResponse({"state": 1, "message": "token有效"})
+    else:
+        return JsonResponse({"state": 0, "message": "token无效"})

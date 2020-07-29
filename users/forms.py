@@ -1,3 +1,6 @@
+# users/forms.py
+import re
+
 from django import forms
 from django.core.exceptions import ValidationError
 
@@ -9,11 +12,11 @@ class RegisterForm(forms.Form):
         label="用户名",
         required=True,
         max_length=50,
-        min_length=5,
+        min_length=2,
         error_messages={
             "required": "该字段不能为空",
             "max_length": "最长不能超过50个字符",
-            "min_length": "最小长度为5"
+            "min_length": "最小长度为2"
         })
     password = forms.CharField(
         label="密码",
@@ -47,18 +50,24 @@ class RegisterForm(forms.Form):
     )
 
     def clean_username(self):
-        val = self.cleaned_data.get('username')
+        val = self.cleaned_data.get("username")
         ret = Users.objects.filter(username=val)
         if not ret:
             return val
         else:
-            raise ValidationError('该用户名已注册!')
+            raise ValidationError("该用户名已注册!")
+    def clean_email(self):
+        val = self.cleaned_data.get("email")
+        if re.match(r'^[0-9a-zA-Z_]{0,19}@[0-9a-zA-Z]{1,13}\.[com,cn,net]{1,3}$', val):
+            return val
+        else:
+            raise ValidationError("邮箱格式不正确!")
 
     # 走完所有的校验才走clean
     def clean(self):
-        pwd = self.cleaned_data.get('password')
-        r_pwd = self.cleaned_data.get('r_password')
+        pwd = self.cleaned_data.get("password")
+        r_pwd = self.cleaned_data.get("r_password")
         if pwd and r_pwd:
             if pwd != r_pwd:
-                raise forms.ValidationError('两次密码不一致')
+                raise forms.ValidationError("两次密码不一致")
         return self.cleaned_data

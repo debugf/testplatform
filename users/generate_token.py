@@ -1,3 +1,4 @@
+# users/generate_token.py
 from datetime import datetime, timedelta
 import jwt
 
