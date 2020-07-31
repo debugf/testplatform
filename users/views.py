@@ -15,12 +15,12 @@ class LoginView(View):
         python_data = eval(json_data)
         username = python_data.get('username')
         password = python_data.get('password')
-        data = Users.objects.filter(username=username, password=password).first()
+        data = Users.objects.filter(username=username, password=password).values("id", "username").first()
         if data:
             token = generate_jwt_token(username)
             result["message"] = "登录成功"
             result["success"] = True
-            result["details"] = {"id": data.id,"token": token}
+            result["details"] = {"id": data["id"], "username": data["username"],"token": token}
             return JsonResponse(result, status=200)
         result["message"] = "登录失败"
         result["success"] = False

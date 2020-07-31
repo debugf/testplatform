@@ -14,9 +14,9 @@ class RegisterForm(forms.Form):
         max_length=50,
         min_length=2,
         error_messages={
-            "required": "该字段不能为空",
-            "max_length": "最长不能超过50个字符",
-            "min_length": "最小长度为2"
+            "required": "用户名不能为空",
+            "max_length": "用户名最长不能超过50个字符",
+            "min_length": "用户名最小长度为2"
         })
     password = forms.CharField(
         label="密码",
@@ -24,9 +24,9 @@ class RegisterForm(forms.Form):
         max_length=50,
         min_length=5,
         error_messages={
-          "required": "该字段不能为空",
-          "max_length": "最长不能超过50个字符",
-          "min_length": "最小长度为5"
+          "required": "密码不能为空",
+          "max_length": "密码最长不能超过50个字符",
+          "min_length": "密码最小长度为5"
         })
     r_password = forms.CharField(
         required=True,
@@ -34,18 +34,18 @@ class RegisterForm(forms.Form):
         min_length=5,
         label="确认密码",
         error_messages={
-            "required": "该字段不能为空",
-            "max_length": "最长不能超过50个字符",
-            "min_length": "最小长度为5"
+            "required": "确认密码不能为空",
+            "max_length": "确认密码最长不能超过50个字符",
+            "min_length": "确认密码最小长度为5"
         })
     email = forms.CharField(
         min_length=5,
         required=True,
         label="邮箱",
         error_messages={
-            "required": "该字段不能为空",
-            "max_length": "最长不能超过50个字符",
-            "min_length": "最小长度为5"
+            "required": "邮箱不能为空",
+            "max_length": "邮箱最长不能超过50个字符",
+            "min_length": "邮箱最小长度为5"
         }
     )
 
@@ -56,6 +56,7 @@ class RegisterForm(forms.Form):
             return val
         else:
             raise ValidationError("该用户名已注册!")
+
     def clean_email(self):
         val = self.cleaned_data.get("email")
         if re.match(r'^[0-9a-zA-Z_]{0,19}@[0-9a-zA-Z]{1,13}\.[com,cn,net]{1,3}$', val):

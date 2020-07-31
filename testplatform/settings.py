@@ -36,12 +36,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'users',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -103,6 +105,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# 添加白名单
+# CORS_ORIGIN_ALLOW_ALL = True:指定所有域名ip都可以访问后端接口
+CORS_ORIGIN_ALLOW_ALL = True
+
+# 指定能访问后端接口的ip或域名列表，前台的后台的都需要添加
+# CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:8080',……]
+
+# 允许跨域时携带Cookie,默认为False
+CORS_ALLOW_CREDENTIALS = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
