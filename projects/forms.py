@@ -5,7 +5,7 @@ from django.core.exceptions import ValidationError
 from projects.models import Projects
 
 
-class RegisterForm(forms.Form):
+class CreateForm(forms.Form):
     name = forms.CharField(
         label="项目名",
         required=True,
@@ -58,6 +58,7 @@ class RegisterForm(forms.Form):
         })
     desc = forms.CharField(
         label="简要描述",
+        required=False,
         max_length=200,
         error_messages={
             "max_length": "简要描述最长不能超过200个字符",
@@ -65,8 +66,8 @@ class RegisterForm(forms.Form):
 
     def clean_name(self):
         val = self.cleaned_data.get("name")
-        ret = Projects.objects.filter(username=val)
+        ret = Projects.objects.filter(name=val)
         if not ret:
             return val
         else:
-            raise ValidationError("该项目名已注册!")
+            raise ValidationError("该项目名已存在!")
