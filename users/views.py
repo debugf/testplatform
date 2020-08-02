@@ -30,6 +30,7 @@ class LoginView(View):
         result["message"] = "登录失败"
         return JsonResponse(result, status=500)
 
+
 class RegisterView(View):
     def post(self, request):
         json_data = request.body.decode('utf-8')

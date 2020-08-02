@@ -5,6 +5,5 @@ from projects import views
 
 urlpatterns = [
     path('', views.CreateListView.as_view()),
-    # path('register', views.RegisterView.as_view()),
-    # path('demo', views.demo)
+    path('<int:pk>', views.UpdateDeleteView.as_view()),
 ]

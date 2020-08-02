@@ -45,3 +45,12 @@ class CreateListView(View):
         result["message"] = "保存失败"
         return JsonResponse(result, status=500)
 
+class UpdateDeleteView(View):
+
+    def update(self, request, pk):
+        pass
+
+    def delete(self, request, pk):
+        project = Projects.objects.get(id=pk)
+        project.delete()
+        return JsonResponse(None, safe=False, status=201)
