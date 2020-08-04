@@ -5,11 +5,14 @@ from django.http import JsonResponse
 from users.models import Users
 
 
-def auth_permission_required():
+def auth_permission_required(func):
     def decorator(view_func):
         def _wrapped_view(request, *args, **kwargs):
             try:
-                auth = request.META.get('HTTP_AUTHORIZATION').split()
+                if func == "func":
+                    auth = request.META.get('HTTP_AUTHORIZATION').split()
+                else:
+                    auth = request.request.META.get('HTTP_AUTHORIZATION').split()
             except AttributeError:
                 return JsonResponse({"status_code": 401, "message": "没有权限"})
             if auth[0].lower() == 'token':

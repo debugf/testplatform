@@ -6,13 +6,14 @@ from users.forms import RegisterForm
 from users.generate_token import generate_jwt_token
 from users.models import Users
 from utils.jwt_permission_required import auth_permission_required
-from utils.result import result
-
-result["success"] = False
+from utils.common import result
 
 
 class LoginView(View):
     def post(self, request):
+        result["message"] = "登录失败"
+        result["success"] = False
+        result["details"] = None
         json_data = request.body.decode('utf-8')
         if json_data:
             python_data = eval(json_data)
@@ -25,14 +26,16 @@ class LoginView(View):
                 result["success"] = True
                 result["details"] = {"id": data["id"], "username": data["username"],"token": token}
                 return JsonResponse(result, status=200)
-            result["message"] = "登录失败"
+            result["details"] = "用户名或密码错误"
             return JsonResponse(result, status=400)
-        result["message"] = "登录失败"
         return JsonResponse(result, status=500)
 
 
 class RegisterView(View):
     def post(self, request):
+        result["message"] = "注册失败"
+        result["success"] = False
+        result["details"] = None
         json_data = request.body.decode('utf-8')
         if json_data:
             python_data = eval(json_data)
@@ -46,13 +49,11 @@ class RegisterView(View):
                 result["details"] = data.cleaned_data
                 return JsonResponse(result, status=200)
             else:
-                result["message"] = "注册失败"
                 result["details"] = data.errors
                 return JsonResponse(result, status=400)
-        result["message"] = "注册失败"
         return JsonResponse(result, status=500)
 
-@auth_permission_required()
+@auth_permission_required("func")
 def demo(request):
     if request.method == 'GET':
         return JsonResponse({"state": 1, "message": "token有效"})
